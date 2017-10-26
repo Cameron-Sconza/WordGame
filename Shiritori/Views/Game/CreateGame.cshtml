@@ -1,0 +1,19 @@
+﻿@model Library.ViewModels.GameVM
+@{
+    ViewBag.Title = "Game";
+}
+
+<h2>New Game</h2>
+
+@using (Html.BeginForm("CreateGame", "Game", FormMethod.Post))
+{
+    <div>
+        <h3><font color="red">@Html.ValidationSummary(true)</font></h3>
+        <div>
+            @Html.LabelFor(m => m.GameName, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.GameName, new { @class = "form-control TextboxFormat" })
+            <font color="red"> @Html.ValidationMessageFor(m => m.GameName) </font>
+        </div>
+        <input type="submit" name="Create Game" />
+    </div>
+}

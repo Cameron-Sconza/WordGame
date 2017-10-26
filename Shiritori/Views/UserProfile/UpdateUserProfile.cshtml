@@ -1,0 +1,28 @@
+﻿@model Library.ViewModels.UserProfileVM
+@{
+    ViewBag.Title = "Profile";
+}
+
+@using (Html.BeginForm("UpdateUserProfile", "UserProfile", FormMethod.Post))
+{
+    <div>
+        @Html.ValidationSummary(true)
+        <div>
+            @Html.LabelFor(m => m.Username, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control TextboxFormat" })
+            <font color="red">@Html.ValidationMessageFor(m => m.Username)</font>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Email, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control TextboxFormat" })
+            <font color="red">@Html.ValidationMessageFor(m => m.Email)</font>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Password, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.Password, new { @class = "form-control TextboxFormat" })
+            <font color="red">@Html.ValidationMessageFor(m => m.Password)</font>
+        </div>
+        <input type="submit" name="Update Profile" />
+    </div>
+
+}

@@ -1,0 +1,36 @@
+﻿@model Library.ViewModels.UserProfileVM
+@{
+    ViewBag.Title = "Profile";
+}
+
+@using (Html.BeginForm("ViewMyProfile", "UserProfile", FormMethod.Post))
+{
+    <div>
+        <h4>Username</h4>
+        <div>
+            @Html.DisplayName(Model.Username)
+        </div>
+        <h4>Email</h4>
+        <div>
+            @Html.DisplayFor(m => m.Email)
+        </div>
+        <h4>Total Games Played</h4>
+        <div>
+            @Html.DisplayName(Model.TotalGames.ToString())
+        </div>
+        <h4>Wins</h4>
+        <div>
+            @Html.DisplayName(Model.Wins.ToString())
+        </div>
+        <h4>Loses</h4>
+        <div>
+            @Html.DisplayName(Model.Losses.ToString())
+        </div>
+        <h4>Overall Score Earned</h4>
+        <div>
+            @Html.DisplayName(Model.OverAllScore.ToString())
+        </div>
+        <div>        </div>
+        @Html.ActionLink("Edit Profile", "UpdateUserProfile", "UserProfile", htmlAttributes: new { @class = "btn btn-sm btn-primary" })
+    </div>
+}

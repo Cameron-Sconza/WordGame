@@ -1,0 +1,29 @@
+﻿@model Library.ViewModels.UserProfileVM
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("Register", "UserProfile", FormMethod.Post))
+{
+    <div>
+        <font color="red">@Html.ValidationSummary(true)</font>
+        <div>
+            @Html.LabelFor(m => m.Username, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control TextboxFormat" })
+            <font color="red"> @Html.ValidationMessageFor(m => m.Username)</font>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Email, new { @class = "LabelFormat" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control TextboxFormat" })
+            <font color="red"> @Html.ValidationMessageFor(m => m.Email)</font>
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Password, new { @class = "LabelFormat" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control TextboxFormat" })
+            <font color="red">  @Html.ValidationMessageFor(m => m.Password) </font>
+        </div>
+        <input type="submit" value="Submit" />
+    </div>
+}

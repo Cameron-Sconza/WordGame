@@ -1,0 +1,97 @@
+﻿@model Library.ViewModels.PlayGameVM
+@using Library.ViewModels
+@{
+    ViewBag.Title = "Play Game";
+}
+
+<h2>Play Game</h2>
+
+<table class="table" tableFormat>
+    <tr>
+        <th>Game Name</th>
+        <th>Player One </th>
+        <th>Player Two</th>
+        <th>Player Three</th>
+        <th>Player Four</th>
+        <th>Player Five</th>
+        <th colspan="2"></th>
+    </tr>
+    @foreach (GameVM value in Model.AllGames)
+    {
+        <tr>
+            <td>@Html.DisplayName(value.GameName)</td>
+            @if (value.Players[0] != null)
+            {
+                <td>@Html.DisplayName(value.Players[0].Username)</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            @if (value.Players[1] != null)
+            {
+                <td>@Html.DisplayName(value.Players[1].Username)</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            @if (value.Players[2] != null)
+            {
+                <td>@Html.DisplayName(value.Players[2].Username)</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            @if (value.Players[3] != null)
+            {
+                <td>@Html.DisplayName(value.Players[3].Username)</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            @if (value.Players[4] != null)
+            {
+                <td>@Html.DisplayName(value.Players[4].Username)</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            <td>@Html.ActionLink("Leave Game", "LeaveGame", "Game", routeValues: new { gameID = value.GameID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+            <td>@Html.ActionLink("Play Game", "ChosenGame", "Game", routeValues: new { gameID = value.GameID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+        </tr>
+    }
+</table>
+@if ((bool)TempData["Play"])
+{
+    using (Html.BeginForm("PlayGame", "Game", FormMethod.Post))
+    {
+        <div class="col-md-6">
+            @Html.HiddenFor(m => m.GameID)
+            @Html.HiddenFor(m => m.GameName)
+            <h3>@Html.DisplayName(Model.PlayerTurnName.Username)'s Turn</h3>
+            <h3>Last Letter: @Html.DisplayName(Model.LastLetter)</h3>
+            <h3>Score: @Html.DisplayName(Model.Score.ToString())</h3>
+            <div>
+                <div>
+                    @Html.LabelFor(m => m.Word, new { @class = "LabelFormat" })
+                    @Html.TextBoxFor(m => m.Word, new { @class = "form-control TextboxFormat" })
+                    <font color="red"> @Html.ValidationMessageFor(m => m.Word)</font>
+                </div>
+                <input type="submit" name="Enter Word" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <table class="table" tableFormat>
+                <tr><th>Words Used</th></tr>
+                @foreach (WordBankVM value in Model.WordBank)
+                {
+                    <tr><td>@value.Words</td></tr>
+                }
+            </table>
+        </div>
+    }
+}

@@ -1,0 +1,52 @@
+﻿@model System.Collections.Generic.List<UserProfileVM>
+    @using Library.ViewModels
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@{
+    ViewBag.Title = "View All Profiles";
+}
+
+<h2>View All Profiles</h2>
+
+<table class="table" tableFormat>
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th colspan="3"> </th>
+    </tr>
+    @foreach (UserProfileVM value in Model)
+    {
+        if (value.Username == Session["Username"].ToString())
+        {
+            continue;
+        }
+        <tr>
+            <td>@Html.DisplayFor(m => value.Username)</td>
+            <td>@Html.DisplayFor(m => value.Email)</td>
+            <td>@Html.ActionLink("Password Reset", "ResetPassword", "UserProfile", routeValues: new { userProfileID = value.UserProfileID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+            @if (value.Username != (string)Session["Username"])
+            {
+                if (value.RoleID < 3)
+                {
+                    <td>@Html.ActionLink("Demote", "Demote", "UserProfile", routeValues: new { userProfileID = value.UserProfileID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+                }
+                else
+                {
+                    <td>Already At The Lowest Possible Access Level</td>
+                }
+                if (value.RoleID > 1)
+                {
+                    <td>@Html.ActionLink("Promote", "Promote", "UserProfile", routeValues: new { userProfileID = value.UserProfileID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+                }
+                else
+                {
+                    <td>Already At The Highest Possible Access Level</td>
+                }
+            }
+        </tr>
+    }
+</table>

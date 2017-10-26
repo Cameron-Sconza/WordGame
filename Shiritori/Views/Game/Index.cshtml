@@ -1,0 +1,87 @@
+﻿@model System.Collections.Generic.List<GameVM>
+@using Library.ViewModels
+@{
+    ViewBag.Title = "Game";
+}
+
+<h2>All Games</h2>
+@if (Model.Count != 0 )
+{
+    <table class="table" tableFormat>
+        <tr>
+            <th>Game Name</th>
+            <th>Player One </th>
+            <th>Player Two</th>
+            <th>Player Three</th>
+            <th>Player Four</th>
+            <th>Player Five</th>
+            <th colspan="2"></th>
+        </tr>
+        @foreach (GameVM value in Model)
+        {
+            <tr>
+                <td>@Html.DisplayName(value.GameName)</td>
+                @if (value.Players[0] != null)
+                {
+                    <td>@Html.DisplayName(value.Players[0].Username)</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                @if (value.Players[1] != null)
+                {
+                    <td>@Html.DisplayName(value.Players[1].Username)</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                @if (value.Players[2] != null)
+                {
+                    <td>@Html.DisplayName(value.Players[2].Username)</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                @if (value.Players[3] != null)
+                {
+                    <td>@Html.DisplayName(value.Players[3].Username)</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                @if (value.Players[4] != null)
+                {
+                    <td>@Html.DisplayName(value.Players[4].Username)</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                @if (value.PlayersID.Count(i => i != null) != 5 && !value.PlayersID.Contains((int)Session["ID"]))
+                {
+                    <td>@Html.ActionLink("Join Game", "JoinGame", "Game", routeValues: new { gameID = value.GameID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                @if ((int)Session["AccessLevel"] == 1)
+                {
+                    <td>@Html.ActionLink("Delete Game", "DeleteGame", "Game", routeValues: new { gameID = value.GameID }, htmlAttributes: new { @class = "btn btn-sm btn-primary" })</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <div>No Games Exists, Please Create One To Get Started.</div>
+}

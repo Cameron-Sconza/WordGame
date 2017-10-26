@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div>
+                    @Html.ActionLink("Shiritori", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @if (Session["Username"] == null)
+                    {
+                        <div style="float:right">
+                            @Html.ActionLink("Register", "Register", "UserProfile", new { area = "" }, new { @class = "navbar-brand" })
+                            @Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        </div>
+                    }
+                    @if (Session["Username"] != null)
+                    {
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle navbar-brand" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Games<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @if ((int)Session["AccessLevel"] <= 2)
+                                    {
+                                        <li>@Html.ActionLink("Create Game", "CreateGame", "Game", new { area = "" }, new { area = "" })</li>
+                                    }
+                                    <li>@Html.ActionLink("View Games", "Index", "Game", new { area = "" }, new { area = "" })</li>
+                                    <li>@Html.ActionLink("View My Games", "PlayGame", "Game", new { area = "" }, new { area = "" })</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle navbar-brand" role="button" aria-expanded="false" href="#" data-toggle="dropdown">Account<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>@Html.ActionLink("View My Profile", "ViewUserProfile", "UserProfile",routeValues: new { userProfileID = (int)Session["ID"] }, htmlAttributes: new { area = "" })</li>
+                                    @if ((int)Session["AccessLevel"] == 1)
+                                    {
+                                        <li>@Html.ActionLink("View All Profiles", "Index", "UserProfile", new { area = "" }, new { area = "" })</li>
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
+                        <div style="float:right">
+                            @Html.ActionLink("Log Out", "LogOut", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
